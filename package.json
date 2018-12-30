@@ -1,0 +1,23 @@
+{
+  "name": "sign-map",
+  "version": "0.0.1",
+  "description": "An interactive map for outside inventory management",
+  "main": "main.js",
+  "scripts": {
+    "start": "electromon ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "electron",
+    "javascript",
+    "google maps api"
+  ],
+  "author": "m-lukas",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^3.0.13"
+  },
+  "dependencies": {
+    "electromon": "^1.0.10"
+  }
+}
