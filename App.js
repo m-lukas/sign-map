@@ -1,7 +1,7 @@
 const App = {
     map: null,
     dbConfig: {
-        apiKey: "AIzaSyDQmL2bCD6rCRcxHOqOvXelpCPk90mSPew",
+        apiKey: "",
         authDomain: "tp-goerlitz-signs.firebaseapp.com",
         databaseURL: "https://tp-goerlitz-signs.firebaseio.com",
         projectId: "tp-goerlitz-signs",
