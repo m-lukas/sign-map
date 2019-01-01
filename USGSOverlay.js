@@ -1,3 +1,5 @@
+//Copyright 2018, Lukas Müller, All rights reserved.
+
 USGSOverlay.prototype = new google.maps.OverlayView();
 
 function USGSOverlay(bounds, image, Map_) {
