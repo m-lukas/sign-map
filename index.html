@@ -2,9 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Sign-Map 2</title>
+    <title>Sign-Map</title>
     <script type='text/javascript' src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANVBn98XfLAjJ8iK-fG6v63LuW3uc88X4"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
     <script src='USGSOverlay.js'></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
@@ -16,16 +17,13 @@
     <script>
         // You can also require other files to run in this process
         require('./renderer.js');
-
-        var main = {
-          map: null
-        }
+        const App = require('./App.js');
 
         function initMap() {
 
             minZoomLevel = 18;
 
-            map = new google.maps.Map(document.getElementById('map'), {
+            App.map = new google.maps.Map(document.getElementById('map'), {
               zoom: minZoomLevel,
               minZoom: minZoomLevel,
               center: {lat: 51.141929, lng: 14.980407},
@@ -35,14 +33,14 @@
               mapTypeControl: false
             });
 
-            var bounds = new google.maps.LatLngBounds(
+            let bounds = new google.maps.LatLngBounds(
               new google.maps.LatLng(51.140760, 14.978550),
               new google.maps.LatLng(51.143140, 14.982280));
 
-            google.maps.event.addListener(map, 'dragend', function() {
-                if(bounds.contains(map.getCenter())) return;
+            google.maps.event.addListener(App.map, 'dragend', function() {
+                if(bounds.contains(App.map.getCenter())) return;
 
-                let c = map.getCenter(),
+                let c = App.map.getCenter(),
                     x = c.lng(),
                     y = c.lat(),
                     maxX = bounds.getNorthEast().lng(),
@@ -55,13 +53,20 @@
                 if(y < minY) y = minY;
                 if(y > maxY) y = maxY;
 
-                map.setCenter(new google.maps.LatLng(y,x));
+                App.map.setCenter(new google.maps.LatLng(y,x));
 
             });
 
+            new USGSOverlay(bounds, './images/map/TP-Map.png', App.map);
 
-            var srcImage = './images/map/TP-Map.png';
-            overlay = new USGSOverlay(bounds, srcImage, map);
+            firebase.initializeApp(App.dbConfig);
+            App.database = firebase.database();
+
+            const signs = require('./signs.js');
+
+            signs.loadSigns();
+
+            console.log(App.signList)
 
         }
 
