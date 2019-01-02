@@ -1,16 +1,16 @@
 const App = require('./App.js');
+const fs = require('fs');
 
 const signs = {
 
-    Sign: function(id, name, bent, type, dirPath, changeDate, coordinats, color){
+    Sign: function(id, name, bent, category, dirPath, changeDate, coordinats, color){
         this.id = id;
         this.name = name;
         this.bent = bent;
-        this.type = type;
+        this.category = category;
         this.dirPath = dirPath;
         this.changeDate = changeDate;
         this.coordinats = coordinats;
-        this.color = color;
         
         this.getID = () => {
             return this.id;
@@ -59,76 +59,25 @@ const signs = {
             this.coordinats = value;
             //update marker by id
         }
-        this.getColor = () => {
-            return this.color;
-        }
-        this.setColor = (value) => {
-            this.color = value;
-            //update marker by id
-        }
     
         //colors: strongyellow, lightyellow, purple, lightpurple, green, lightgreen, black, lightblue, magenta, darkgrey, blue, red, pink, brown, grey, orange,lightbrown, white
         this.getIcon = () => {
-            let icon
-            let iconPath = 'images/icons/'
-            switch(this.color){
-                case 'strongyellow':
-                    icon = iconPath + 'marker_strongyellow.png';
-                    break;
-                case 'lightyellow':
-                    icon = iconPath + 'marker_lightyellow.png';
-                    break;
-                case 'purple':
-                    icon = iconPath + 'marker_purple.png';
-                    break;
-                case 'lightpurple':
-                    icon = iconPath + 'marker_lightpurple.png';
-                    break;
-                case 'green':
-                    icon = iconPath + 'marker_green.png';
-                    break;
-                case 'lightgreen':
-                    icon = iconPath + 'marker_lightgreen.png';
-                    break;
-                case 'black':
-                    icon = iconPath + 'marker_black.png';
-                    break;
-                case 'lightblue':
-                    icon = iconPath + 'marker_lightblue.png';
-                    break;
-                case 'magenta':
-                    icon = iconPath + 'marker_magenta.png';
-                    break;
-                case 'darkgrey':
-                    icon = iconPath + 'marker_darkgrey.png';
-                    break;
-                case 'blue':
-                    icon = iconPath + 'marker_blue.png';
-                    break;
-                case 'red':
-                    icon = iconPath + 'marker_red.png';
-                    break;
-                case 'pink':
-                    icon = iconPath + 'marker_pink.png';
-                    break;
-                case 'brown':
-                    icon = iconPath + 'marker_brown.png';
-                    break;               
-                case 'grey':
-                    icon = iconPath + 'marker_grey.png';
-                    break;
-                case 'orange':
-                    icon = iconPath + 'marker_orange.png';
-                    break;
-                case 'lightbrown':
-                    icon = iconPath + 'marker_lightbrown.png';
-                    break;
-                default:
-                    icon = iconPath + 'marker_white.png';
-                    break;        
-            }
+            let icon = App.iconPath + signs.Categories[this.category].icon
             return icon;
         }
+    },
+
+    Categories: null,
+
+    getCategories: (cb) => {
+        let path = './categories.json';
+        fs.readFile(require.resolve(path), (err, data) => {
+            if (err){
+                cb(err)
+            }else{
+                cb(null, JSON.parse(data))
+            }
+        })
     },
 
     loadSigns: () => {
@@ -142,61 +91,61 @@ const signs = {
                 let dirPath = data.val().save;
                 let changeDate = data.val().date;
                 let coordinats = {lat: data.val().lat, lng: data.val().lng};
-                let color;
+                let category;
                 switch(type){
                     case 'B1 - Service- und Informationsschild (A3 quer)':
-                        color='strongyellow';
+                        category="1";
                         break;
                     case 'B2 - Service- und Informationsschild (A3 hoch)':
-                        color='lightyellow';
+                        category="2";
                         break;
                     case 'B3 - Service- und Informationsschild (A4 quer)':
-                        color='purple';
+                        category="3";
                         break;
                     case 'B4 - Service- und Informationsschild (A4 hoch)':
-                        color='lightpurple';
+                        category="4";
                         break;
                     case 'B5 - Service- und Informationsschild (A5 quer)':
-                        color='green';
+                        category="5";
                         break;
                     case 'B6 - Service- und Informationsschild (A5 hoch)':
-                        color='lightgreen';
+                        category="6";
                         break;
                     case 'B7 - Uebersichtstafel/Lageplan':
-                        color='black';
+                        category="7";
                         break;
                     case 'B8 - Informationen zu spez. Patenschaften':
-                        color='lightblue';
+                        category="8";
                         break;
                     case 'B10 - Themenschilder':
-                        color='magenta';
+                        category="9";
                         break;
                     case 'B11 - Rundgangsschild (Pfeilform)':
-                        color='darkgrey';
+                        category="10";
                         break;
                     case 'B12 - Werbung/Plakat':
-                        color='blue';
+                        category="11";
                         break;
                     case 'S1 - Sachschild (Tier/Pflanze/Objekte)':
-                        color='red';
+                        category="12";
                         break;
                     case 'S2 - Sachschilder (klein)':
-                        color='pink';
+                        category="13";
                         break;
                     case 'P1 - Sondertafel/Spiele':
-                        color='brown';
+                        category="14";
                         break;               
                     case 'W - Wegweiser':
-                        color='grey';
+                        category="15";
                         break;
                     case 'U - ungenormtes Schild':
-                        color='orange';
+                        category="16";
                         break;
                     case 'U/P1 - ungenormte Sondertafel':
-                        color='lightbrown';
+                        category="17";
                         break;
                     default:
-                        color='unknown';
+                        category="18";
                         break;        
                 }
                 
@@ -206,7 +155,7 @@ const signs = {
                 }
                 App.ids.push(id);
                 
-                let sign = new signs.Sign(id, name, bent, type, dirPath, changeDate, coordinats, color);
+                let sign = new signs.Sign(id, name, bent, category, dirPath, changeDate, coordinats);
                 App.signList.push(sign);
     
                 signs.placeMarker(sign);
@@ -223,20 +172,10 @@ const signs = {
             position: sign.getCoordinates(),
             map: App.map,
                     
-            id: '',
-            name: '',
-            date: '',
-            bent: '',
-            save: '',
-            type: ''
+            id: ''
         });
                 
         marker.set('id', sign.getID());
-        marker.set('name', sign.getName());
-        marker.set('date', sign.getDate());
-        marker.set('bent', sign.isBent());
-        marker.set('type', sign.getType());
-        marker.set('save', sign.getPath());
                 
         /*
         google.maps.event.addListener(marker, 'click', function() {

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Sign-Map</title>
+    <title>Schilder-Übersicht</title>
     <script type='text/javascript' src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANVBn98XfLAjJ8iK-fG6v63LuW3uc88X4"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
@@ -12,15 +12,22 @@
   <body>
     <div class="mapWrapper">
         <div id="map"></div>
-        <div class="sidebar"></div>
+        <div class="sidebar">
+            <div id="filters">
+            </div>
+        </div>
     </div>
     <script>
         // You can also require other files to run in this process
+        const dotenv = require('dotenv');
+
         require('./renderer.js');
         const App = require('./App.js');
         const signs = require('./signs.js');
 
         function initMap() {
+
+            dotenv.config();
 
             minZoomLevel = 18;
 
@@ -60,12 +67,29 @@
 
             new USGSOverlay(bounds, './images/map/TP-Map.png', App.map);
 
+            App.dbConfig = {
+              apiKey: process.env.API_KEY,
+              authDomain: process.env.AUTH_DOMAIN,
+              databaseURL: process.env.DB_URL,
+              projectId: process.env.PROJECT_ID,
+              storageBucket: process.env.STORAGE_BUCKET,
+              messagingSenderId: process.env.MSG_SENDER_ID
+            }
+
             firebase.initializeApp(App.dbConfig);
             App.database = firebase.database();
 
-            signs.loadSigns();
+            signs.getCategories((err, categories) => {
+              if(!err){
+                signs.Categories = categories;
+                renderFilters();
+              }else{
+                //ERRORMELDUNG
+                console.log(err);
+              }
+            });
 
-            console.log(App.signList)
+            signs.loadSigns();
 
         }
 

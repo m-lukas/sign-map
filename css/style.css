@@ -2,6 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .mapWrapper{
@@ -24,4 +25,38 @@ html, body {
     background-color: white;
     z-index: 1;
     box-shadow: 3px 3px 5px 6px #ccc;
+}
+
+#filters{
+    height: 80%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: auto;
+}
+
+.filter{
+    height: 40px;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    margin-bottom: 1px;
+}
+
+.markerIconWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.markerIcon{
+    height: 25px;
+    width: 25px;
+}
+
+.markerDesc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
 }

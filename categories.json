@@ -1,0 +1,92 @@
+{
+    "1": {
+        "name": "B1 - Service- und Informationsschild (A3 quer)",
+        "color": "srongyellow",
+        "icon": "marker_strongyellow.png"
+    },
+    "2": {
+        "name": "B2 - Service- und Informationsschild (A3 hoch)",
+        "color": "lightyellow",
+        "icon": "marker_lightyellow.png"
+    },
+    "3": {
+        "name": "B3 - Service- und Informationsschild (A4 quer)",
+        "color": "purple",
+        "icon": "marker_purple.png"
+    },
+    "4": {
+        "name": "B4 - Service- und Informationsschild (A4 hoch)",
+        "color": "purple",
+        "icon": "marker_lightpurple.png"
+    },
+    "5": {
+        "name": "B5 - Service- und Informationsschild (A5 quer)",
+        "color": "green",
+        "icon": "marker_green.png"
+    },
+    "6": {
+        "name": "B6 - Service- und Informationsschild (A5 hoch)",
+        "color": "lightgreen",
+        "icon": "marker_lightgreen.png"
+    },
+    "7": {
+        "name": "B7 - Uebersichtstafel/Lageplan",
+        "color": "black",
+        "icon": "marker_black.png"
+    },
+    "8": {
+        "name": "B8 - Informationen zu spez. Patenschaften",
+        "color": "lightblue",
+        "icon": "marker_lightblue.png"
+    },
+    "9": {
+        "name": "B10 - Themenschilder",
+        "color": "magenta",
+        "icon": "marker_magenta.png"
+    },
+    "10": {
+        "name": "B11 - Rundgangsschild (Pfeilform)",
+        "color": "darkgrey",
+        "icon": "marker_darkgrey.png"
+    },
+    "11": {
+        "name": "B12 - Werbung/Plakat",
+        "color": "blue",
+        "icon": "marker_blue.png"
+    },
+    "12": {
+        "name": "S1 - Sachschild (Tier/Pflanze/Objekte)",
+        "color": "red",
+        "icon": "marker_red.png"
+    },
+    "13": {
+        "name": "S2 - Sachschilder (klein)",
+        "color": "pink",
+        "icon": "marker_pink.png"
+    },
+    "14": {
+        "name": "P1 - Sondertafel/Spiele",
+        "color": "brown",
+        "icon": "marker_brown.png"
+    },
+    "15": {
+        "name": "W - Wegweiser",
+        "color": "grey",
+        "icon": "marker_grey.png"
+    },
+    "16": {
+        "name": "U - ungenormtes Schild",
+        "color": "orange",
+        "icon": "marker_orange.png"
+    },
+    "17": {
+        "name": "U/P1 - ungenormte Sondertafel",
+        "color": "lightbrown",
+        "icon": "marker_lightbrown.png"
+    },
+    "18": {
+        "name": "unknown",
+        "color": "unknown",
+        "icon": "marker_white.png"
+    }
+}
