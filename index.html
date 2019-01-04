@@ -13,8 +13,20 @@
     <div class="mapWrapper">
         <div id="map"></div>
         <div class="sidebar">
-            <div id="filters">
+            <div class="ov">
+              <div id="ov-overlay"></div>
+              <div class="ov-header"></div>
+                <h1 id="ov-id"></h1>
+                <h2 id="ov-name"></h2>
+                <button class="ov-close" onclick="unselectMarker()">X</button>
+              <div class="ov-body">
+                <p id="ov-category"></p>
+                <p id="ov-bent"></p>
+                <p id="ov-dirPath"></p>
+                <p id="ov-date"></p>
+              </div>
             </div>
+            <div id="filters"></div>
         </div>
     </div>
     <script>
@@ -65,6 +77,10 @@
 
             });
 
+            google.maps.event.addListener(App.map, 'click', function() {
+                unselectMarker();
+            });
+
             new USGSOverlay(bounds, './images/map/TP-Map.png', App.map);
 
             App.dbConfig = {
@@ -84,7 +100,6 @@
                 signs.Categories = categories;
                 renderFilters();
 
-                console.log(App.activeFilters);
               }else{
                 //ERRORMELDUNG
                 console.log(err);
@@ -92,6 +107,8 @@
             });
 
             signs.loadSigns();
+
+            console.log(App.signList);
 
         }
 

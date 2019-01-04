@@ -14,7 +14,8 @@ html, body {
 }
 
 #map {
-    height: 100%;
+    height: 100vh;
+    max-height: 100vh;
     cursor: pointer;
     grid-area: 'map';
 }
@@ -27,8 +28,21 @@ html, body {
     box-shadow: 3px 3px 5px 6px #ccc;
 }
 
+.ov{
+    height: 50vh;
+    max-height: 50vh;
+}
+
+#ov-overlay{
+    height: 50vh;
+    width: 100%;
+    position: fixed;
+    display: block;
+    background-color: white;
+}
+
 #filters{
-    height: 80%;
+    height: 50vh;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;

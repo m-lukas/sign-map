@@ -5,6 +5,7 @@ const App = {
     database: null,
     table: null,
     iconPath: 'images/icons/',
+    selectedSign: null,
     signList: new Array(),
     markerList: new Array(),
     ids: new Array(),

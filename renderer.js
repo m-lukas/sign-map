@@ -56,3 +56,37 @@ onFilter = (item, id) => {
         });
     }
 }
+
+onMarkerClick = (sign) => {
+    if(sign !== App.selectedSign){
+        //unselect Marker
+
+        //Remove layer above
+
+        App.selectedSign = sign;
+        document.getElementById('ov-id').innerHTML = `#${sign.getID()}`;
+        document.getElementById('ov-name').innerHTML = sign.getName();
+        document.getElementById('ov-category').innerHTML = signs.Categories[sign.getCategory()].name;
+        document.getElementById('ov-bent').innerHTML = `${sign.isBent() ? 'Gebogen' : 'Nicht gebogen'}.`;
+        document.getElementById('ov-dirPath').innerHTML = sign.getPath();
+        document.getElementById('ov-date').innerHTML = sign.getDate();
+
+        document.getElementById('ov-overlay').style.display = 'none';
+
+        //Marker animation
+
+    }
+}
+
+unselectMarker = () => {
+    App.selectedSign = null;
+
+    document.getElementById('ov-overlay').style.display = 'block';
+
+    document.getElementById('ov-id').innerHTML = '';
+    document.getElementById('ov-name').innerHTML = '';
+    document.getElementById('ov-category').innerHTML = '';
+    document.getElementById('ov-bent').innerHTML = '';
+    document.getElementById('ov-dirPath').innerHTML = '';
+    document.getElementById('ov-date').innerHTML = '';
+}

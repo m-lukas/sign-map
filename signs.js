@@ -197,10 +197,9 @@ const signs = {
                 
         marker.set('id', sign.getID());
                 
-        /*
         google.maps.event.addListener(marker, 'click', function() {
-        } );
-        */
+            onMarkerClick(sign);
+        });
                 
         App.markerList.push(marker);
 
