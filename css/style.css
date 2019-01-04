@@ -37,10 +37,19 @@ html, body {
 
 .filter{
     height: 40px;
-    background-color: aliceblue;
+    background-color: white;
     display: grid;
     grid-template-columns: 20% 80%;
     margin-bottom: 1px;
+    cursor: pointer;
+}
+
+.filter:hover{
+    background-color: rgba(0, 0, 0, 0.05)
+}
+
+.filter-active{
+    background-color: aliceblue;
 }
 
 .markerIconWrapper{

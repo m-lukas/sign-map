@@ -8,19 +8,20 @@ const App = require('./App.js');
 
 renderFilters= () => {
     jQuery(document).ready(function(){
-        console.log(signs.Categories);
         Object.entries(signs.Categories).map((category) => {
             /*
-                <div class="filter">
+                <div class="filter filter-active" onclick="onFilter(this, '1')">
                     <div class="markerIconWrapper">
                         <img class="markerIcon" src="images/icons/marker_green.png" alt="marker icon">
                     </div>
-                    <p class="markerDesc">B5 - Service- und Informationsschild (A5 quer)</p>
+                    <p class="markerDesc">Test-Felds</p>
                 </div>
             */
 
+            App.activeFilters.push(category[0]);
+
             let filter = [
-                `<div class="filter" data-id=${category[0]}>`,
+                `<div class="filter filter-active" onclick="onFilter(this, '${category[0]}')">`,
                     `<div class="markerIconWrapper">`,
                         `<img class="markerIcon" src=${App.iconPath + category[1].icon} alt="marker icon">`,
                     `</div>`,
@@ -32,4 +33,26 @@ renderFilters= () => {
 
         });     
     });
+}
+
+onFilter = (item, id) => {
+    if(App.activeFilters.includes(id)){
+        let index = App.activeFilters.indexOf(id);
+        if(index > -1) App.activeFilters.splice(index, 1);
+        item.classList.toggle('filter-active');
+
+        let signsToHide = signs.findSignsByCategory(id);
+        signsToHide.forEach(sign => {
+            signs.setMarkerVisibility(sign.getID(), false);
+        });
+
+    }else{
+        App.activeFilters.push(id);
+        item.classList.toggle('filter-active');
+
+        let signsToShow = signs.findSignsByCategory(id);
+        signsToShow.forEach(sign => {
+            signs.setMarkerVisibility(sign.getID(), true);
+        });
+    }
 }

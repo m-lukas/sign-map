@@ -31,11 +31,11 @@ const signs = {
             this.bent = value;
             //update marker by id
         }
-        this.getType = () => {
-            return this.type;
+        this.getCategory = () => {
+            return this.category;
         }
-        this.setType = (value) => {
-            this.type = value;
+        this.setCategory = (value) => {
+            this.category = value;
             //update marker by id
         }
         this.getPath = () => {
@@ -65,6 +65,9 @@ const signs = {
             let icon = App.iconPath + signs.Categories[this.category].icon
             return icon;
         }
+
+        App.signList.push(this);
+
     },
 
     Categories: null,
@@ -78,6 +81,24 @@ const signs = {
                 cb(null, JSON.parse(data))
             }
         })
+    },
+
+    findSignsByCategory: (category) => {
+        let signs = new Array();
+        App.signList.forEach(sign => {
+            if(sign.getCategory() === category){
+                signs.push(sign);
+            }
+        });
+        return signs;
+    },
+
+    setMarkerVisibility: (signId, value) => {
+        App.markerList.forEach(marker => {
+            if(marker.id === signId){
+                if(typeof value === "boolean") marker.setVisible(value);
+            }
+        });
     },
 
     loadSigns: () => {
@@ -156,7 +177,6 @@ const signs = {
                 App.ids.push(id);
                 
                 let sign = new signs.Sign(id, name, bent, category, dirPath, changeDate, coordinats);
-                App.signList.push(sign);
     
                 signs.placeMarker(sign);
                 //insertRow(sign);
@@ -183,16 +203,7 @@ const signs = {
         */
                 
         App.markerList.push(marker);
-                
-        let formatedBent = 'Nein';
-                
-        if (sign.isBent()) {
-            formatedBent = 'Ja';
-        } else {
-            formatedBent = 'Nein';
-        }
 
-        //dataTable
     }
 
 }
