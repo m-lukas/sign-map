@@ -60,9 +60,7 @@ onFilter = (item, id) => {
 onMarkerClick = (sign) => {
     if(sign !== App.selectedSign){
         //unselect Marker
-
-        //Remove layer above
-
+        
         App.selectedSign = sign;
         document.getElementById('ov-id').innerHTML = `#${sign.getID()}`;
         document.getElementById('ov-name').innerHTML = sign.getName();
@@ -89,4 +87,12 @@ unselectMarker = () => {
     document.getElementById('ov-bent').innerHTML = '';
     document.getElementById('ov-dirPath').innerHTML = '';
     document.getElementById('ov-date').innerHTML = '';
+}
+
+moveMarker = () => {
+
+}
+
+editMarker = () => {
+
 }

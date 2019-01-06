@@ -14,19 +14,49 @@
         <div id="map"></div>
         <div class="sidebar">
             <div class="ov">
-              <div id="ov-overlay"></div>
-              <div class="ov-header"></div>
-                <h1 id="ov-id"></h1>
-                <h2 id="ov-name"></h2>
-                <button class="ov-close" onclick="unselectMarker()">X</button>
+              <div class="ov-header">
+                  <button class="ov-button ov-close" onclick="unselectMarker()">X</button>
+                  <h1 id="ov-id">#465</h1>
+                  <h2 id="ov-name">Lust zum Matschen und Bauen? - Milchspielplatz</h2>
+              </div>
               <div class="ov-body">
-                <p id="ov-category"></p>
-                <p id="ov-bent"></p>
-                <p id="ov-dirPath"></p>
-                <p id="ov-date"></p>
+                  <div class="ov-wrapper">
+                    <p class="ov-label">KATEGORIE</p>
+                    <p id="ov-category" class="ov-value">
+                      P1 - Sondertafel/Spiele
+                      <div id="ov-category-indicator"></div>
+                    </p>  
+                  </div>
+                  <div class="ov-wrapper">
+                    <p class="ov-label">GEBOGEN</p>
+                    <p id="ov-bent" class="ov-value">Nicht gebogen</p>
+                  </div>
+                  <div class="ov-wrapper">
+                    <p class="ov-label">SPEICHERORT</p>
+                    <p id="ov-dirPath" class="ov-value">C://</p>
+                  </div>
+                  <div class="ov-wrapper">
+                    <p class="ov-label">GEÄNDERT AM</p>
+                    <p id="ov-date" class="ov-value">06.01.2019</p>  
+                  </div>
+                  <div class="ov-footer">
+                      <button class="ov-button ov-footer-button" onclick="moveMarker()">
+                          <img src="images/Pen.png" alt="move">
+                      </button>
+                      <button class="ov-button ov-footer-button" onclick="editMarker()">
+                        <img src="images/Path 2683.png" alt="edit">
+                      </button>
+                  </div>
               </div>
             </div>
-            <div id="filters"></div>
+            <div id="filters">
+              <div class="filter filter-active" onclick="onFilter(this, '1')">
+                <div class="markerIconWrapper">
+                    <img class="markerIcon" src="images/icons/marker_green.png" alt="marker icon">
+                </div>
+                <p class="markerDesc">Test-Felds</p>
+            </div>
+            </div>
         </div>
     </div>
     <script>
