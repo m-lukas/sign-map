@@ -32,18 +32,18 @@ html, body {
     box-shadow: 3px 3px 5px 6px #ccc;
 }
 
-#ov-overlay{
-    height: 50vh;
-    width: 100%;
-    position: fixed;
-    display: block;
-    background-color: white;
-}
-
 .ov{
     height: fit-content;
     width: 100%;
     max-width: 100%;
+}
+
+#ov-overlay{
+    height: inherit;
+    width: 100%;
+    position: fixed;
+    display: block;
+    background-color: white;
 }
 
 .ov-header{
@@ -55,6 +55,7 @@ html, body {
     position: fixed;
     top: 15px;
     right: 15px;
+    z-index: -1;
 }
 
 .ov-footer-button{
@@ -114,7 +115,7 @@ html, body {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.05);
     color: rgb(59,59,59);
-    font-size: 20;
+    font-size: 15px;
     border-radius: 5px;
     text-align: center;
     line-height: 40px;

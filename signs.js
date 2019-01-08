@@ -94,11 +94,22 @@ const signs = {
     },
 
     setMarkerVisibility: (signId, value) => {
+        let marker = findMarkerById(signId);
+        if(typeof value === "boolean" && marker !== null) marker.setVisible(value);
+    },
+
+    findMarkerById: (signId) => {
+        let m = null;
         App.markerList.forEach(marker => {
             if(marker.id === signId){
-                if(typeof value === "boolean") marker.setVisible(value);
+                m = marker;
             }
         });
+        if(m === null){
+            return null;
+        }else{
+            return m;
+        }
     },
 
     loadSigns: () => {

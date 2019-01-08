@@ -59,7 +59,7 @@ onFilter = (item, id) => {
 
 onMarkerClick = (sign) => {
     if(sign !== App.selectedSign){
-        //unselect Marker
+        unselectMarker();
         
         App.selectedSign = sign;
         document.getElementById('ov-id').innerHTML = `#${sign.getID()}`;
@@ -69,14 +69,25 @@ onMarkerClick = (sign) => {
         document.getElementById('ov-dirPath').innerHTML = sign.getPath();
         document.getElementById('ov-date').innerHTML = sign.getDate();
 
+        if(signs.Categories[sign.getCategory()].name.length > 37){
+            document.getElementById('ov-category').style.fontSize = '12px';
+        }else{
+            document.getElementById('ov-category').style.fontSize = '15px';
+        }
+
         document.getElementById('ov-overlay').style.display = 'none';
 
-        //Marker animation
+        let marker = signs.findMarkerById(sign.getID());
+        if(marker !== null) marker.setAnimation(google.maps.Animation.BOUNCE);
 
     }
 }
 
 unselectMarker = () => {
+    if(App.selectedSign !== null){
+        let oldMarker = signs.findMarkerById(App.selectedSign.getID());
+        oldMarker.setAnimation(null);
+    }
     App.selectedSign = null;
 
     document.getElementById('ov-overlay').style.display = 'block';
@@ -87,6 +98,8 @@ unselectMarker = () => {
     document.getElementById('ov-bent').innerHTML = '';
     document.getElementById('ov-dirPath').innerHTML = '';
     document.getElementById('ov-date').innerHTML = '';
+
+    document.getElementById('ov-category').style.fontSize = '35px';
 }
 
 moveMarker = () => {
