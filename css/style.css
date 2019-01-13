@@ -9,6 +9,13 @@ html, body {
     margin: 0;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 .mapWrapper{
     width: 100%;
     height: 100vh;
@@ -49,6 +56,7 @@ html, body {
 .ov-header{
     background-color: rgba(0, 0, 0, 0.05);
     padding: 15px;
+    min-height: 115px;
 }
 
 .ov-close{
@@ -61,9 +69,6 @@ html, body {
 .ov-footer-button{
     float: right;
     margin-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-bottom: 15px;
 }
 
@@ -77,6 +82,15 @@ html, body {
     border: none;
     border-radius: 100%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ov-button img{
+    height: 12px;
+    width: 12px;
+    fill: white;
 }
 
 #ov-id{
@@ -85,6 +99,10 @@ html, body {
     color: rgb(66, 67, 67);
     margin-bottom: 10px;
     font-weight: bold;
+}
+
+#ov-id::before{
+    content: '#';
 }
 
 #ov-name{
@@ -110,6 +128,12 @@ html, body {
     margin: 0;
 }
 
+.ov-edit{
+    padding: 0;
+    margin: 0;
+    display: none;
+}
+
 .ov-value{
     height: 40px;
     width: 100%;
@@ -120,6 +144,9 @@ html, body {
     text-align: center;
     line-height: 40px;
     margin: 0;
+    border: none;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #ov-category-indicator{
@@ -128,6 +155,23 @@ html, body {
     width: 14px;
     border-radius: 100%;
     background-color: rgb(150, 121, 90);
+}
+
+.ov-margin{
+    margin-bottom: 15px;
+}
+
+.ov-save{
+    height: 30px;
+    background-color: rgb(113, 199, 8);
+    color: white;
+    font-size: 15px;
+    padding: 0 10px 0 10px;
+    border: none;
+    border-radius: 10px;
+    float: right;
+    display: none;
+    margin-bottom: 15px;
 }
 
 #filters{

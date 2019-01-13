@@ -70,6 +70,11 @@ const signs = {
 
     },
 
+    Bented: {
+        bent: 'Gebogen',
+        notBent: 'Nicht gebogen'
+    },
+
     Categories: null,
 
     getCategories: (cb) => {

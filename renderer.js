@@ -62,7 +62,7 @@ onMarkerClick = (sign) => {
         unselectMarker();
         
         App.selectedSign = sign;
-        document.getElementById('ov-id').innerHTML = `#${sign.getID()}`;
+        document.getElementById('ov-id').innerHTML = sign.getID();
         document.getElementById('ov-name').innerHTML = sign.getName();
         document.getElementById('ov-category').innerHTML = signs.Categories[sign.getCategory()].name;
         document.getElementById('ov-bent').innerHTML = `${sign.isBent() ? 'Gebogen' : 'Nicht gebogen'}.`;
@@ -99,7 +99,7 @@ unselectMarker = () => {
     document.getElementById('ov-dirPath').innerHTML = '';
     document.getElementById('ov-date').innerHTML = '';
 
-    document.getElementById('ov-category').style.fontSize = '35px';
+    resetOV();
 }
 
 moveMarker = () => {
@@ -107,5 +107,88 @@ moveMarker = () => {
 }
 
 editMarker = () => {
+    //let name = document.getElementById('ov-name').innerHTML;
+    let category = document.getElementById('ov-category').innerHTML;
+    let bent = document.getElementById('ov-bent').innerHTML;
+    let dirPath = document.getElementById('ov-dirPath').innerHTML;
+
+    document.getElementById('ov-category').style.display = 'none';
+    document.getElementById('ov-bent').style.display = 'none';
+    document.getElementById('ov-dirPath').style.display = 'none';
+    //document.getElementById('ov-name').style.display = 'block';
+
+    document.getElementById('ov-edit-button').style.display = 'none';
+    document.getElementById('ov-move-button').style.display = 'none';
+
+    //document.getElementById('ov-name-edit').value = name;
+    document.getElementById('ov-category-edit').value = category;
+    document.getElementById('ov-bent-edit').value = bent;
+    document.getElementById('ov-dirPath-edit').value = dirPath;
+
+    if(category.length > 37){
+        document.getElementById('ov-category-edit').style.fontSize = '12px';
+    }else{
+        document.getElementById('ov-category-edit').style.fontSize = '15px';
+    }
+
+    document.getElementById('ov-category-edit').style.display = 'block';
+    document.getElementById('ov-bent-edit').style.display = 'block';
+    document.getElementById('ov-dirPath-edit').style.display = 'block';
+    //document.getElementById('ov-name').style.display = 'block';
+
+    document.getElementById('ov-save').style.display = 'block';
+}
+
+resetOV = () => {
+    document.getElementById('ov-save').style.display = 'none';
+    document.getElementById('ov-category-edit').style.display = 'none';
+    document.getElementById('ov-bent-edit').style.display = 'none';
+    document.getElementById('ov-dirPath-edit').style.display = 'none';
+    //document.getElementById('ov-name-edit').style.display = 'none';
+
+    document.getElementById('ov-category-edit').value = '';
+    document.getElementById('ov-bent-edit').value = '';
+    document.getElementById('ov-dirPath-edit').value = '';
+    //document.getElementById('ov-name-edit').value = '';
+
+    document.getElementById('ov-edit-button').style.display = 'block';
+    document.getElementById('ov-move-button').style.display = 'block';
+
+    document.getElementById('ov-category').style.display = 'block';
+    document.getElementById('ov-bent').style.display = 'block';
+    document.getElementById('ov-dirPath').style.display = 'block';
+    //document.getElementById('ov-name').style.display = 'block';
+
+    document.getElementById('ov-category-edit').style.fontSize = '15px';
+}
+
+saveEdits = () => {
+
+    //let name = document.getElementById('ov-name').value;
+    let category = document.getElementById('ov-category-edit').value;
+    let bent = document.getElementById('ov-bent-edit').value;
+    let dirPath = document.getElementById('ov-dirPath-edit').value;
+
+    //validation
+
+    console.log(category );
+    console.log(bent);
+
+    let date = new Date();
+    let formatedDate = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+    document.getElementById('ov-date').innerHTML = formatedDate;
+
+    //document.getElementById('ov-name').innerHTML = name;
+    document.getElementById('ov-category').innerHTML = category;
+    document.getElementById('ov-bent').innerHTML = bent;
+    document.getElementById('ov-dirPath').innerHTML = dirPath;
+
+    if(category.length > 37){
+        document.getElementById('ov-category').style.fontSize = '12px';
+    }else{
+        document.getElementById('ov-category').style.fontSize = '15px';
+    }
+
+    resetOV();
 
 }
