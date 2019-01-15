@@ -9,7 +9,16 @@ const App = {
     signList: new Array(),
     markerList: new Array(),
     ids: new Array(),
-    activeFilters: new Array()
+    activeFilters: new Array(),
+
+    states: {
+        nameValue: '',
+        categoryId: '',
+        categoryValue: '',
+        bentValue: '',
+        dirPathValue: '',
+        ov_errors: []
+    }
 }
 
 module.exports = App;

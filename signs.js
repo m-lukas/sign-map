@@ -22,6 +22,9 @@ const signs = {
             this.name = value;
             //update marker by id
         }
+        this.getBent = () => {
+            return this.bent;
+        }
         this.isBent = () => {
             let isBent = null;
             this.bent === 'Schild ist gebogen' ? isBent = true : isBent = false;
@@ -96,6 +99,16 @@ const signs = {
             }
         });
         return signs;
+    },
+
+    findSignById: (id) => {
+        let sign = null;
+        App.signList.forEach(querySign => {
+            if(querySign.getID() === id){
+                sign = querySign;
+            }
+        });
+        return sign;
     },
 
     setMarkerVisibility: (signId, value) => {
@@ -214,7 +227,7 @@ const signs = {
         marker.set('id', sign.getID());
                 
         google.maps.event.addListener(marker, 'click', function() {
-            onMarkerClick(sign);
+            selectMarker(sign);
         });
                 
         App.markerList.push(marker);

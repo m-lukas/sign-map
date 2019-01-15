@@ -149,6 +149,10 @@ button:focus {
     overflow: hidden;
 }
 
+#ov-categoryId{
+    display: none;
+}
+
 #ov-category-indicator{
     display: none;
     height: 14px;
