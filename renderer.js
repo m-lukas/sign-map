@@ -6,7 +6,7 @@ require('jQuery');
 const signs = require('./signs.js');
 const App = require('./App.js');
 
-renderFilters= () => {
+renderCategories= () => {
     jQuery(document).ready(function(){
         Object.entries(signs.Categories).map((category) => {
             /*
@@ -17,9 +17,7 @@ renderFilters= () => {
                     <p class="markerDesc">Test-Felds</p>
                 </div>
             */
-
             App.activeFilters.push(category[0]);
-
             let filter = [
                 `<div class="filter filter-active" onclick="onFilter(this, '${category[0]}')">`,
                     `<div class="markerIconWrapper">`,
@@ -28,8 +26,23 @@ renderFilters= () => {
                     `<p class="markerDesc">${category[1].name}</p>`,
                 `</div>`
             ]
-
             jQuery(filter.join('')).appendTo('#filters');
+
+            //<option value="...">...</option>
+            let categoryOption = `<option value="${category[0]}">${category[1].name}</option>`
+            jQuery(categoryOption).appendTo('#ov-category-edit');
+
+        });     
+    });
+}
+
+renderBentSelection = () => {
+    jQuery(document).ready(function(){
+        Object.entries(signs.BentTypes).map((bentType) => {
+
+            //<option value="...">...</option>
+            let bentOption = `<option value="${bentType[0]}">${bentType[1].name}</option>`
+            jQuery(bentOption).appendTo('#ov-bent-edit');
 
         });     
     });
@@ -66,7 +79,8 @@ selectMarker = (sign) => {
         App.states.nameValue = sign.getName();
         App.states.categoryId = sign.getCategory();
         App.states.categoryValue = signs.Categories[sign.getCategory()].name;
-        App.states.bentValue = sign.getBent();
+        App.states.bentId = sign.getBent();
+        App.states.bentValue = signs.BentTypes[sign.getBent()].name;
         App.states.dirPathValue = sign.getPath();
 
         setOv(sign);
@@ -90,6 +104,7 @@ unselectMarker = () => {
     App.states.nameValue = '';
     App.states.categoryValue = '';
     App.states.categoryId = '';
+    App.states.bentId = '';
     App.states.bentValue = '';
     App.states.dirPathValue = '';
 
@@ -105,7 +120,7 @@ setOv = (sign) => {
     document.getElementById('ov-name').innerHTML = sign.getName();
     document.getElementById('ov-categoryId').innerHTML = sign.getCategory();
     document.getElementById('ov-category').innerHTML = signs.Categories[sign.getCategory()].name;
-    document.getElementById('ov-bent').innerHTML = `${sign.isBent() ? 'Gebogen' : 'Nicht gebogen'}.`;
+    document.getElementById('ov-bent').innerHTML = signs.BentTypes[sign.getBent()].name;;
     document.getElementById('ov-dirPath').innerHTML = sign.getPath();
     document.getElementById('ov-date').innerHTML = sign.getDate();
 
@@ -131,8 +146,8 @@ editMarker = () => {
     document.getElementById('ov-move-button').style.display = 'none';
 
     //document.getElementById('ov-name-edit').value = App.states.nameValue;
-    document.getElementById('ov-category-edit').value = App.states.categoryValue;
-    document.getElementById('ov-bent-edit').value = App.states.bentValue;
+    document.getElementById('ov-category-edit').value = App.states.categoryId;
+    document.getElementById('ov-bent-edit').value = App.states.bentId;
     document.getElementById('ov-dirPath-edit').value = App.states.dirPathValue;
 
     if(App.states.categoryValue.length > 37){
@@ -204,17 +219,17 @@ onEdit = (event) => {
     let element = event.target.id;
     let value = event.target.value;
 
-    //validation
+    //validation? -> not necessary if only selects
 
     switch(element){
         case 'ov-name-edit':
             App.states.nameValue = value;
             break;
         case 'ov-category-edit':
-            App.states.categoryValue = value;
+            App.states.categoryId = value;
             break;
         case 'ov-bent-edit':
-            App.states.bentValue = value;
+            App.states.bentId = value;
             break;
         case 'ov-dirPath-edit':
             App.states.dirPathValue = value;
@@ -230,7 +245,7 @@ saveEdits = () => {
 
         let name = App.states.nameValue;
         let category = App.states.categoryId;
-        let bent = App.states.bentValue;
+        let bent = App.states.bentId;
         let dirPath = App.states.dirPathValue;
 
         App.selectedSign.setName(name);

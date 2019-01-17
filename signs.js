@@ -25,11 +25,6 @@ const signs = {
         this.getBent = () => {
             return this.bent;
         }
-        this.isBent = () => {
-            let isBent = null;
-            this.bent === 'Schild ist gebogen' ? isBent = true : isBent = false;
-            return isBent;
-        }
         this.setBent = (value) => {
             this.bent = value;
             //update marker by id
@@ -80,8 +75,21 @@ const signs = {
 
     Categories: null,
 
+    BentTypes: null,
+
     getCategories: (cb) => {
         let path = './categories.json';
+        fs.readFile(require.resolve(path), (err, data) => {
+            if (err){
+                cb(err)
+            }else{
+                cb(null, JSON.parse(data))
+            }
+        })
+    },
+
+    getBentTypes: (cb) => {
+        let path = './bent.json';
         fs.readFile(require.resolve(path), (err, data) => {
             if (err){
                 cb(err)
@@ -136,7 +144,7 @@ const signs = {
         signRef.orderByValue().once("value", function(snapshot) {
             snapshot.forEach(function(data) {
                 let name = data.val().name;
-                let bent = data.val().gebogen;
+                let bent = data.val().bentId;
                 let type = data.val().typ;
                 let dirPath = data.val().save;
                 let changeDate = data.val().date;

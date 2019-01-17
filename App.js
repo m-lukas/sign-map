@@ -15,6 +15,7 @@ const App = {
         nameValue: '',
         categoryId: '',
         categoryValue: '',
+        bentId: '',
         bentValue: '',
         dirPathValue: '',
         ov_errors: []

@@ -26,14 +26,16 @@
                   <p class="ov-label">KATEGORIE</p>
                   <div class="ov-wrapper">
                     <div id="ov-categoryId"></div>
-                    <p id="ov-category" class="ov-value">...</p>
-                    <input class="ov-value ov-edit" id="ov-category-edit" oninput="onEdit(event)"></input>
+                    <p id="ov-category" class="ov-value"></p>
+                    <select class="ov-value ov-edit" id="ov-category-edit" onchange="onEdit(event)">
+                    </select>
                   </div>
 
-                  <p class="ov-label">GEBOGEN</p>
+                  <p class="ov-label">GEBOGEN?</p>
                   <div class="ov-wrapper">
                     <p id="ov-bent" class="ov-value">...</p>
-                    <input class="ov-value ov-edit" id="ov-bent-edit" oninput="onEdit(event)"></input>
+                    <select class="ov-value ov-edit" id="ov-bent-edit" onchange="onEdit(event)">
+                    </select>
                   </div>
 
                   <p class="ov-label">SPEICHERORT</p>
@@ -129,11 +131,45 @@
 
             firebase.initializeApp(App.dbConfig);
             App.database = firebase.database();
+            /*
+            let signRef = App.database.ref("signs");
+            signRef.orderByValue().once("value", function(snapshot) {
+                snapshot.forEach(function(data) {
+                    let bent = data.val().gebogen;
+                    let id = data.key;
+
+                    let bentType = 2;
+
+                    if(bent === "Schild ist gebogen"){
+                        bentType = 1;
+                    }else if(bent === "Schild ist nicht gebogen"){
+                        bentType = 2;
+                    }else{
+                        bentType = 2;
+                    }
+
+                    firebase.database().ref('signs/' + id).update({
+                      bentId: bentType
+                    });
+                });
+            });
+            */
 
             signs.getCategories((err, categories) => {
               if(!err){
                 signs.Categories = categories;
-                renderFilters();
+                renderCategories();
+
+              }else{
+                //ERRORMELDUNG
+                console.log(err);
+              }
+            });
+
+            signs.getBentTypes((err, bentTypes) => {
+              if(!err){
+                signs.BentTypes = bentTypes;
+                renderBentSelection();
 
               }else{
                 //ERRORMELDUNG
@@ -144,7 +180,6 @@
             signs.loadSigns();
 
             console.log(App.signList);
-
         }
 
         google.maps.event.addDomListener(window, 'load', initMap);

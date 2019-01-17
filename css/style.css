@@ -183,7 +183,7 @@ button:focus {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .filter{

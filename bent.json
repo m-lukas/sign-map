@@ -1,0 +1,10 @@
+{
+    "1": {
+        "name": "Ist gebogen",
+        "bool": true
+    },
+    "2": {
+        "name": "Ist nicht gebogen",
+        "bool": false
+    }
+}
