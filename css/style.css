@@ -129,7 +129,6 @@ button:focus {
 }
 
 .ov-edit{
-    padding: 0;
     margin: 0;
     display: none;
 }
@@ -146,20 +145,26 @@ button:focus {
     margin: 0;
     border: none;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: scroll;
+    padding: 0 5px 0 5px;
+    box-sizing: border-box;
 }
 
 #ov-categoryId{
     display: none;
 }
 
-#ov-category-indicator{
-    display: none;
-    height: 14px;
-    width: 14px;
-    border-radius: 100%;
-    background-color: rgb(150, 121, 90);
+/*
+#ov-dirPath-label::after{
+    content: '';
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    margin-left: 5px;
+    background: url('../images/icons/click.svg') no-repeat;
+    background-size: contain;
 }
+*/
 
 .ov-margin{
     margin-bottom: 15px;

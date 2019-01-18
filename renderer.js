@@ -3,6 +3,9 @@
 // All of the Node.js APIs are available in this process.
 
 require('jQuery');
+const remote = require('electron').remote;
+const dialog = remote.require('electron').dialog;
+
 const signs = require('./signs.js');
 const App = require('./App.js');
 
@@ -200,7 +203,7 @@ resetOV = () => {
     //ov_name_edit.value = "";
     ov_category_edit.value = "";
     ov_bent_edit.value = "";
-    ov_dirPath_edit.value = "";
+    ov_dirPath_edit.innerHTML = "";
 
     //reset font-sizes
     ov_category.style.fontSize = '15px';
@@ -217,7 +220,7 @@ resetOV = () => {
 
 onEdit = (event) => {
     let element = event.target.id;
-    let value = event.target.value;
+    if(event.target.id !== "ov-dirPath-edit") var value = event.target.value;
 
     //validation? -> not necessary if only selects
 
@@ -232,7 +235,11 @@ onEdit = (event) => {
             App.states.bentId = value;
             break;
         case 'ov-dirPath-edit':
-            App.states.dirPathValue = value;
+            let path = dialog.showOpenDialog({
+                properties: ["openFile"]
+            })
+            document.getElementById("ov-dirPath-edit").innerHTML = path;
+            App.states.dirPathValue = path;
             break;
     }
 }
