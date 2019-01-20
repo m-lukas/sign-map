@@ -60,7 +60,7 @@ const signs = {
     
         //colors: strongyellow, lightyellow, purple, lightpurple, green, lightgreen, black, lightblue, magenta, darkgrey, blue, red, pink, brown, grey, orange,lightbrown, white
         this.getIcon = () => {
-            let icon = App.iconPath + signs.Categories[this.category].icon
+            let icon = App.markerPath + signs.Categories[this.category].icon
             return icon;
         }
 
@@ -109,6 +109,16 @@ const signs = {
         return signs;
     },
 
+    findSignsByBentType: (bentType) => {
+        let signs = new Array();
+        App.signList.forEach(sign => {
+            if(sign.getBent() == bentType){
+                signs.push(sign);
+            }
+        });
+        return signs;
+    },
+
     findSignById: (id) => {
         let sign = null;
         App.signList.forEach(querySign => {
@@ -120,7 +130,7 @@ const signs = {
     },
 
     setMarkerVisibility: (signId, value) => {
-        let marker = findMarkerById(signId);
+        let marker = signs.findMarkerById(signId);
         if(typeof value === "boolean" && marker !== null) marker.setVisible(value);
     },
 

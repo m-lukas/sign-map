@@ -46,11 +46,12 @@ button:focus {
 }
 
 #ov-overlay{
-    height: inherit;
+    height: 483px;
     width: 100%;
-    position: fixed;
+    position: absolute;
     display: block;
-    background-color: white;
+    z-index: 1;
+    background-color: lightgray;
 }
 
 .ov-header{
@@ -60,16 +61,20 @@ button:focus {
 }
 
 .ov-close{
-    position: fixed;
     top: 15px;
     right: 15px;
-    z-index: -1;
+    position: absolute;
+}
+
+.ov-footer{
+    height: fit-content;
+    width: 100%;
+    overflow: auto;
 }
 
 .ov-footer-button{
     float: right;
     margin-left: 10px;
-    margin-bottom: 15px;
 }
 
 .ov-button{

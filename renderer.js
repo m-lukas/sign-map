@@ -20,11 +20,12 @@ renderCategories= () => {
                     <p class="markerDesc">Test-Felds</p>
                 </div>
             */
-            App.activeFilters.push(category[0]);
+
+            App.activeFilters.push({type: "category", id: category[0]});
             let filter = [
-                `<div class="filter filter-active" onclick="onFilter(this, '${category[0]}')">`,
+                `<div class="filter filter-active" onclick="onFilter(this, {type: 'category', id:'${category[0]}'})">`,
                     `<div class="markerIconWrapper">`,
-                        `<img class="markerIcon" src=${App.iconPath + category[1].icon} alt="marker icon">`,
+                        `<img class="markerIcon" src=${App.markerPath + category[1].icon} alt="marker">`,
                     `</div>`,
                     `<p class="markerDesc">${category[1].name}</p>`,
                 `</div>`
@@ -39,9 +40,20 @@ renderCategories= () => {
     });
 }
 
-renderBentSelection = () => {
+renderBentTypes = () => {
     jQuery(document).ready(function(){
         Object.entries(signs.BentTypes).map((bentType) => {
+
+            App.activeFilters.push({type: "bent", id: bentType[0]});
+            let filter = [
+                `<div class="filter filter-active" onclick="onFilter(this, {type: 'bent', id:'${bentType[0]}'})">`,
+                    `<div class="markerIconWrapper">`,
+                        `<img class="markerIcon" src=${App.iconPath + bentType[1].icon} alt="bentType">`,
+                    `</div>`,
+                    `<p class="markerDesc">${bentType[1].name}</p>`,
+                `</div>`
+            ]
+            jQuery(filter.join('')).appendTo('#filters');
 
             //<option value="...">...</option>
             let bentOption = `<option value="${bentType[0]}">${bentType[1].name}</option>`
@@ -51,25 +63,60 @@ renderBentSelection = () => {
     });
 }
 
-onFilter = (item, id) => {
-    if(App.activeFilters.includes(id)){
-        let index = App.activeFilters.indexOf(id);
+onFilter = (item, filterIdentifier) => {
+    let {type, id} = filterIdentifier;
+
+    if(App.filterIsActive(filterIdentifier)){
+        let index = App.indexOfFilter(filterIdentifier, 'active');
         if(index > -1) App.activeFilters.splice(index, 1);
         item.classList.toggle('filter-active');
+        App.inactiveFilters.push(filterIdentifier);
 
-        let signsToHide = signs.findSignsByCategory(id);
-        signsToHide.forEach(sign => {
-            signs.setMarkerVisibility(sign.getID(), false);
-        });
+        let signsToHide = new Array()
+        switch(type){
+            case 'category':
+                signsToHide = signs.findSignsByCategory(id);
+                signsToHide.forEach(sign => {
+                    signs.setMarkerVisibility(sign.getID(), false);
+                });
+                break;
+            case 'bent':
+                signsToHide = signs.findSignsByBentType(id);
+                signsToHide.forEach(sign => {
+                    signs.setMarkerVisibility(sign.getID(), false);
+                });
+                break;
+        }
 
     }else{
-        App.activeFilters.push(id);
+        let index = App.indexOfFilter(filterIdentifier, 'inactive');
+        if(index > -1) App.inactiveFilters.splice(index, 1);
+        App.activeFilters.push(filterIdentifier);
         item.classList.toggle('filter-active');
 
-        let signsToShow = signs.findSignsByCategory(id);
-        signsToShow.forEach(sign => {
-            signs.setMarkerVisibility(sign.getID(), true);
-        });
+        let signsToShow = new Array();
+        switch(type){
+            case 'category':
+                signsToShow = signs.findSignsByCategory(id);
+                signsToShow.forEach(sign => {
+                    let bentType = sign.getBent();
+                    let filterIndex = App.indexOfFilter({type:'bent', id:bentType}, 'inactive');
+                    if(filterIndex === -1){
+                        signs.setMarkerVisibility(sign.getID(), true);
+                    }
+                });
+                break;
+            case 'bent':
+                signsToShow = signs.findSignsByBentType(id);
+                signsToShow.forEach(sign => {
+                    let category = sign.getCategory();
+                    let filterIndex = App.indexOfFilter({type:'category', id:category}, 'inactive');
+                    if(filterIndex === -1){
+                        signs.setMarkerVisibility(sign.getID(), true);
+                    }
+                });
+                break;
+        }
     }
 }
 
