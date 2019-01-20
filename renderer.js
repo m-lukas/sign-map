@@ -200,7 +200,7 @@ editMarker = () => {
     //document.getElementById('ov-name-edit').value = App.states.nameValue;
     document.getElementById('ov-category-edit').value = App.states.categoryId;
     document.getElementById('ov-bent-edit').value = App.states.bentId;
-    document.getElementById('ov-dirPath-edit').value = App.states.dirPathValue;
+    document.getElementById('ov-dirPath-edit').innerHTML = App.states.dirPathValue;
 
     if(App.states.categoryValue.length > 37){
         document.getElementById('ov-category-edit').style.fontSize = '12px';
@@ -296,6 +296,13 @@ onEdit = (event) => {
     }
 }
 
+cancelEdits = () => {
+
+    resetOV();
+    setOv(App.selectedSign);
+
+}
+
 saveEdits = () => {
 
     if(App.states.ov_errors.length === 0){
@@ -320,13 +327,6 @@ saveEdits = () => {
         setOv(App.selectedSign);
 
         //Success Message?
-
-    }
-
-    cancelEdits = () => {
-
-        resetOV();
-        setOv(App.selectedSign);
 
     }
 
