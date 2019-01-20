@@ -183,6 +183,8 @@ setOv = (sign) => {
 }
 
 moveMarker = () => {
+    let sign = App.selectedSign;
+    let marker = signs.findMarkerById(sign.getID());
 
 }
 
@@ -212,6 +214,7 @@ editMarker = () => {
     document.getElementById('ov-dirPath-edit').style.display = 'block';
 
     document.getElementById('ov-save').style.display = 'block';
+    document.getElementById('ov-cancel').style.display = 'block';
 }
 
 resetOV = () => {
@@ -230,6 +233,7 @@ resetOV = () => {
     let ov_edit_button = document.getElementById('ov-edit-button');
     let ov_move_button = document.getElementById('ov-move-button');
     let ov_save = document.getElementById('ov-save');
+    let ov_cancel = document.getElementById('ov-cancel');
 
     //hide edit-fields
     //ov_name_edit.style.display = 'none';
@@ -238,6 +242,7 @@ resetOV = () => {
     ov_bent_edit.style.display = 'none';
     ov_dirPath_edit.style.display = 'none';
     ov_save.style.display = 'none';
+    ov_cancel.style.display = 'none';
 
     //reset all fields
     ov_id.innerHTML = "";
@@ -315,6 +320,13 @@ saveEdits = () => {
         setOv(App.selectedSign);
 
         //Success Message?
+
+    }
+
+    cancelEdits = () => {
+
+        resetOV();
+        setOv(App.selectedSign);
 
     }
 

@@ -175,9 +175,8 @@ button:focus {
     margin-bottom: 15px;
 }
 
-.ov-save{
+.ov-action{
     height: 30px;
-    background-color: rgb(113, 199, 8);
     color: white;
     font-size: 15px;
     padding: 0 10px 0 10px;
@@ -185,7 +184,15 @@ button:focus {
     border-radius: 10px;
     float: right;
     display: none;
-    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.ov-save{
+    background-color: rgb(113, 199, 8);
+}
+
+.ov-cancel{
+    background-color: grey;
 }
 
 #filters{
