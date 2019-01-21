@@ -24,6 +24,116 @@ button:focus {
     grid-template-columns: auto 300px;
 }
 
+.confirmation-overlay{
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+}
+
+.confirmation-overlay.is-visible{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+
+.confirmation-wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation-popup{
+    position: absolute;
+    height: 190px;
+    width: 340px;
+    background-color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    display: grid;
+    grid-template-areas: 
+        "desc desc"
+        "ok cancel";
+    grid-template-rows: 72% 28%;
+    grid-template-columns: 1fr 1fr;
+    transform: translateY(-40px);
+    transition-property: transform;
+    transition-duration: 0.3s;
+}
+
+.popup-desc{
+    grid-area: desc;
+    color: grey;
+    font-size: 15px;
+    margin-bottom: 0;
+    line-height: 100%;
+    text-align: center;
+    padding: 10px;
+    padding-top: 15%;
+}
+
+.popup-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.popup-ok{
+    grid-area: ok;
+    background-color: rgba(126, 223, 7, 0.842);
+    border-radius: 0 0 0 5px;
+}
+
+.popup-cancel{
+    grid-area: cancel;
+    background-color: #C5CCD7;
+    border-radius: 0 0 5px 0;
+}
+
+#moveMarkerHelp{
+    display: none;
+}
+
+.instruction-box{
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    top: 20px;
+    left: 20px;
+    width: 300px;
+    min-height:80px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.05);
+    padding: 10px 20px 10px 10px;
+    box-sizing: border-box;
+}
+
+.instruction-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.instruction-box img{
+    height: 20px;
+    width: 20px;
+    margin: 20px;
+}
+
+.instruction-desc-headline{
+    font-weight: bold;
+}
+
+.instruction-desc p{
+    font-size: 12px;
+}
+
 #map {
     height: 100vh;
     max-height: 100vh;
@@ -120,6 +230,8 @@ button:focus {
 
 .ov-body{
     padding: 15px;
+    height: 338px;
+    box-sizing: border-box;
 }
 
 .ov-wrapper{

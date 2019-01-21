@@ -183,9 +183,35 @@ setOv = (sign) => {
 }
 
 moveMarker = () => {
+
+    App.isMoving = true;
+
+    document.getElementById('ov-edit-button').style.display = 'none';
+    document.getElementById('ov-move-button').style.display = 'none';
+    document.getElementById('ov-cancel').style.display = 'block';
+
+    document.getElementById('moveMarkerHelp').style.display = 'block';
+}
+
+endMoving = (latLng) => {
+
     let sign = App.selectedSign;
     let marker = signs.findMarkerById(sign.getID());
 
+    App.isMoving = false;
+
+    sign.setCoordinates({lat: latLng.lat, lng: latLng.lng});
+    marker.setPosition(latLng);
+
+    resetOV();
+
+    let date = new Date();
+    let formatedDate = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+
+    App.selectedSign.setDate(formatedDate);
+    //save location
+
+    setOv(App.selectedSign);
 }
 
 editMarker = () => {
@@ -218,6 +244,7 @@ editMarker = () => {
 }
 
 resetOV = () => {
+    let moveMarkerHelp = document.getElementById('moveMarkerHelp');
     //get all elements
     let ov_id = document.getElementById('ov-id');
     let ov_name = document.getElementById('ov-name');
@@ -243,6 +270,7 @@ resetOV = () => {
     ov_dirPath_edit.style.display = 'none';
     ov_save.style.display = 'none';
     ov_cancel.style.display = 'none';
+    moveMarkerHelp.style.display = 'none';
 
     //reset all fields
     ov_id.innerHTML = "";

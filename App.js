@@ -12,6 +12,7 @@ const App = {
     ids: new Array(),
     activeFilters: new Array(),
     inactiveFilters: new Array(),
+    isMoving: false,
 
     states: {
         nameValue: '',

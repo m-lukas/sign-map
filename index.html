@@ -11,13 +11,42 @@
   </head>
   <body>
     <div class="mapWrapper">
+        <div id="confirmation-overlay" class="confirmation-overlay is-visible">
+            <div class="confirmation-wrapper">
+                <div class="confirmation-popup">
+                    <button class="ov-button ov-close" onclick="closePopup()">
+                        <img src="images/icons/close.svg" alt="close">
+                    </button>
+                    <p class="popup-desc">Möchten Sie den Marker an die ausgewählte Position verschieben?</p>
+                    <div class="popup-ok popup-action">
+                        <p>Ok</p>
+                    </div>
+                    <div class="popup-cancel popup-action">
+                        <p>Abbrechen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="moveMarkerHelp" class="instruction-box">
+            <div class="instruction-wrapper">
+                <img src="images/icons/move_black.svg" alt="move">
+                <div class="instruction-desc">
+                    <p class="instruction-desc-headline">
+                        Marker Verschieben
+                    </p>
+                    <p>
+                        Klick auf die Karte um den ausgewählten Marker an die jeweillige Position zu verschieben.
+                    </p>
+                </div>
+            </div>
+        </div>
         <div id="map"></div>
         <div class="sidebar">
             <div class="ov">
               <div id="ov-overlay"></div>
               <div class="ov-header">
                   <button class="ov-button ov-close" onclick="unselectMarker()">
-                      <img src="images/icons/close.svg" alt="move">
+                      <img src="images/icons/close.svg" alt="close">
                   </button>
                   <h1 id="ov-id">...</h1>
                   <h2 id="ov-name">...</h2>
@@ -74,6 +103,7 @@
         const dotenv = require('dotenv');
 
         require('./renderer.js');
+        require('./utils.js');
         const App = require('./App.js');
         const signs = require('./signs.js');
 
@@ -117,8 +147,16 @@
 
             });
 
-            google.maps.event.addListener(App.map, 'click', function() {
-                unselectMarker();
+            google.maps.event.addListener(App.map, 'click', function(event) {
+                if(App.isMoving){
+                    document.getElementById('confirmation-overlay').classList.add('is-visible');
+
+                    //transmit latLng to onClick or state?
+
+                    endMoving(event.latLng);
+                }else{
+                    unselectMarker();
+                }
             });
 
             new USGSOverlay(bounds, './images/map/TP-Map.png', App.map);
