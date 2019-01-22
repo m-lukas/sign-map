@@ -18,6 +18,10 @@
     "electron": "^3.0.13"
   },
   "dependencies": {
+    "datatables.net-buttons-dt": "^1.5.4",
+    "datatables.net-dt": "^1.10.19",
+    "datatables.net-responsive-dt": "^2.2.3",
+    "datatables.net-scroller-dt": "^1.5.1",
     "dotenv": "^6.2.0",
     "electromon": "^1.0.10",
     "fs": "0.0.1-security",
