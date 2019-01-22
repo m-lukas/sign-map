@@ -205,6 +205,7 @@ button:focus {
 }
 
 .search-button-wrapper{
+    background-color: rgb(76, 149, 233);
     height: 70px;
     width: 100%;
     display: flex;
