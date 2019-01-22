@@ -11,8 +11,15 @@
   </head>
   <body>
     <div class="mapWrapper">
-        <div id="confirmation-overlay" class="confirmation-overlay">
-            <div class="confirmation-wrapper">
+        <div id="search-overlay" class="overlay">
+            <div class="overlay-wrapper">
+                <div class="search-popup">
+                    <h1>Test</h1>
+                </div>
+            </div>
+        </div>
+        <div id="confirmation-overlay" class="overlay">
+            <div class="overlay-wrapper">
                 <div class="confirmation-popup">
                     <button class="ov-button ov-close" onclick="closePopup()">
                         <img src="images/icons/close.svg" alt="close">
@@ -42,6 +49,10 @@
         </div>
         <div id="map"></div>
         <div class="sidebar">
+            <div class="search-button-wrapper">
+                <button class="search-button ov-button" onclick="showSearch()">Schild suchen</button>
+            </div>
+            <div class="sidebar-divider"></div>
             <div class="ov">
               <div id="ov-overlay"></div>
               <div class="ov-header">
