@@ -11,18 +11,18 @@
   </head>
   <body>
     <div class="mapWrapper">
-        <div id="confirmation-overlay" class="confirmation-overlay is-visible">
+        <div id="confirmation-overlay" class="confirmation-overlay">
             <div class="confirmation-wrapper">
                 <div class="confirmation-popup">
                     <button class="ov-button ov-close" onclick="closePopup()">
                         <img src="images/icons/close.svg" alt="close">
                     </button>
                     <p class="popup-desc">Möchten Sie den Marker an die ausgewählte Position verschieben?</p>
-                    <div class="popup-ok popup-action">
-                        <p>Ok</p>
+                    <div class="popup-ok popup-action" onclick="completeMoving()">
+                        <p>Ja</p>
                     </div>
-                    <div class="popup-cancel popup-action">
-                        <p>Abbrechen</p>
+                    <div class="popup-cancel popup-action" onclick="cancelMoving()">
+                        <p>Nein</p>
                     </div>
                 </div>
             </div>
@@ -148,12 +148,12 @@
             });
 
             google.maps.event.addListener(App.map, 'click', function(event) {
-                if(App.isMoving){
+                console.log(App.states.isMoving);
+                if(App.states.isMoving){
+                    
+                    App.states.movingCoords = event.latLng;
                     document.getElementById('confirmation-overlay').classList.add('is-visible');
 
-                    //transmit latLng to onClick or state?
-
-                    endMoving(event.latLng);
                 }else{
                     unselectMarker();
                 }

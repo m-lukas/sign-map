@@ -157,6 +157,8 @@ unselectMarker = () => {
     App.states.bentId = '';
     App.states.bentValue = '';
     App.states.dirPathValue = '';
+    App.states.isMoving = false;
+    App.states.movingCoords = null;
 
     document.getElementById('ov-overlay').style.display = 'block';
 
@@ -184,7 +186,7 @@ setOv = (sign) => {
 
 moveMarker = () => {
 
-    App.isMoving = true;
+    App.states.isMoving = true;
 
     document.getElementById('ov-edit-button').style.display = 'none';
     document.getElementById('ov-move-button').style.display = 'none';
@@ -193,12 +195,14 @@ moveMarker = () => {
     document.getElementById('moveMarkerHelp').style.display = 'block';
 }
 
-endMoving = (latLng) => {
+completeMoving = () => {
 
     let sign = App.selectedSign;
     let marker = signs.findMarkerById(sign.getID());
+    let latLng = App.states.movingCoords;
 
-    App.isMoving = false;
+    App.states.isMoving = false;
+    App.states.movingCoords = null;
 
     sign.setCoordinates({lat: latLng.lat, lng: latLng.lng});
     marker.setPosition(latLng);
@@ -244,6 +248,7 @@ editMarker = () => {
 }
 
 resetOV = () => {
+    let confirmation_overlay = document.getElementById('confirmation-overlay');
     let moveMarkerHelp = document.getElementById('moveMarkerHelp');
     //get all elements
     let ov_id = document.getElementById('ov-id');
@@ -271,6 +276,7 @@ resetOV = () => {
     ov_save.style.display = 'none';
     ov_cancel.style.display = 'none';
     moveMarkerHelp.style.display = 'none';
+    if(confirmation_overlay.classList.contains('is-visible')) confirmation_overlay.classList.remove('is-visible');
 
     //reset all fields
     ov_id.innerHTML = "";

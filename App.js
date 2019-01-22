@@ -12,7 +12,6 @@ const App = {
     ids: new Array(),
     activeFilters: new Array(),
     inactiveFilters: new Array(),
-    isMoving: false,
 
     states: {
         nameValue: '',
@@ -21,7 +20,9 @@ const App = {
         bentId: '',
         bentValue: '',
         dirPathValue: '',
-        ov_errors: []
+        ov_errors: [],
+        isMoving: false,
+        movingCoords: null,
     },
 
     filterIsActive: (identifier) => {
