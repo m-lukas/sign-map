@@ -32,6 +32,9 @@ const signs = {
         this.getCategory = () => {
             return this.category;
         }
+        this.getCategoryName = () => {
+            return signs.Categories[this.category].name;
+        }
         this.setCategory = (value) => {
             this.category = value;
             //update marker by id
@@ -218,15 +221,17 @@ const signs = {
                 }
                 
                 let id = data.key;
+                /*
                 if(App.ids.includes(id)){
                     id = Math.max.apply(null, App.ids)+1;
                 }
+                */
+                //or update id in database
                 App.ids.push(id);
                 
                 let sign = new signs.Sign(id, name, bent, category, dirPath, changeDate, coordinats);
     
                 signs.placeMarker(sign);
-                //insertRow(sign);
     
             });
         });
@@ -250,6 +255,18 @@ const signs = {
                 
         App.markerList.push(marker);
 
+    },
+
+    insertRow: (sign) => {
+        jQuery(document).ready(function() {
+			var t = jQuery('#search-table').DataTable();	 
+				t.row.add( [
+					sign.getID(),
+					sign.getName(),
+                    sign.getCategoryName(),
+                    sign.getDate()
+				] ).draw( false );
+		} );
     }
 
 }

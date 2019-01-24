@@ -21,8 +21,10 @@
                         </button>
                         <h1 class="search-title">Suchen</h1>
                         <div class="searchbar-wrapper">
-                            <input type="text" name="searchbar" class="ov-value" id="searchbar">
-                            <img src="images/icons/search.svg" alt="search">
+                            <input type="text" name="searchbar" class="ov-value" id="searchbar" oninput="searchSigns(event)">
+                            <button class="searchbar-button" onclick="searchSigns()">
+                                <img src="images/icons/search.svg" alt="search">
+                            </button>
                         </div>
                     </div>
                     <table id="search-table" class="dataTable">
@@ -70,8 +72,9 @@
         <div id="map"></div>
         <div class="sidebar">
             <div class="search-button-wrapper">
-                <button class="search-button ov-button" onclick="openSearch()">Schild suchen</button>
+                <button class="search-button ov-button" onclick="openSearch()">Schilder suchen</button>
             </div>
+            <div class="sidebar-divider"></div>
             <div class="ov">
               <div id="ov-overlay"></div>
               <div class="ov-header">
@@ -130,11 +133,11 @@
     </div>
     <script>
         const dotenv = require('dotenv');
-        //require('jQuery');
-        //require( 'datatables.net-dt' )();
-        //require( 'datatables.net-buttons-dt' )();
-        //require( 'datatables.net-responsive-dt' )();
-        //require( 'datatables.net-scroller-dt' )();
+        require('jQuery');
+        require( 'datatables.net-dt' )();
+        require( 'datatables.net-buttons-dt' )();
+        require( 'datatables.net-responsive-dt' )();
+        require( 'datatables.net-scroller-dt' )();
 
         require('./renderer.js');
         require('./utils.js');
@@ -195,11 +198,16 @@
 
             new USGSOverlay(bounds, './images/map/TP-Map.png', App.map);
 
-            /*
             jQuery(document).ready( function () {
-                jQuery('#search-table').DataTable();
+                jQuery('#search-table').DataTable( {
+                    scrollY: "350px",
+                    scrollCollapse: true,
+                    paging: false
+                } );
+                jQuery('#search-table_length').remove();
+                jQuery('#search-table_filter').remove();
+                jQuery('#search-table_info').remove();
             } );
-            */
 
             App.dbConfig = {
               apiKey: process.env.API_KEY,
