@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
     <script src="USGSOverlay.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.4/r-2.2.2/sc-1.5.0/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/table.css">
   </head>
   <body>
     <div class="mapWrapper">
@@ -37,6 +37,7 @@
                             </tr>
                         </thead>
                     </table>
+                    <p id="search-results-count">0 / 0 Ergebnissen</p>
                 </div>
             </div>
         </div>
@@ -199,7 +200,7 @@
             new USGSOverlay(bounds, './images/map/TP-Map.png', App.map);
 
             jQuery(document).ready( function () {
-                jQuery('#search-table').DataTable( {
+                let table = jQuery('#search-table').DataTable( {
                     scrollY: "350px",
                     scrollCollapse: true,
                     paging: false
@@ -207,6 +208,16 @@
                 jQuery('#search-table_length').remove();
                 jQuery('#search-table_filter').remove();
                 jQuery('#search-table_info').remove();
+
+                jQuery('#search-table tbody').on( 'click', 'tr', function () {
+                    //table.row(this).data()[0]
+                    let row = table.row(this).data();
+                    if(table.row(this).data()){
+                        let signId = row[0];
+                        let sign = signs.findSignById(signId);
+                        selectMarker(sign);
+                    }
+                });
             } );
 
             App.dbConfig = {

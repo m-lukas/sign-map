@@ -168,18 +168,20 @@ unselectMarker = () => {
 
 setOv = (sign) => {
 
-    document.getElementById('ov-id').innerHTML = sign.getID();
-    document.getElementById('ov-name').innerHTML = sign.getName();
-    document.getElementById('ov-categoryId').innerHTML = sign.getCategory();
-    document.getElementById('ov-category').innerHTML = signs.Categories[sign.getCategory()].name;
-    document.getElementById('ov-bent').innerHTML = signs.BentTypes[sign.getBent()].name;;
-    document.getElementById('ov-dirPath').innerHTML = sign.getPath();
-    document.getElementById('ov-date').innerHTML = sign.getDate();
+    if(sign != null){
+        document.getElementById('ov-id').innerHTML = sign.getID();
+        document.getElementById('ov-name').innerHTML = sign.getName();
+        document.getElementById('ov-categoryId').innerHTML = sign.getCategory();
+        document.getElementById('ov-category').innerHTML = signs.Categories[sign.getCategory()].name;
+        document.getElementById('ov-bent').innerHTML = signs.BentTypes[sign.getBent()].name;;
+        document.getElementById('ov-dirPath').innerHTML = sign.getPath();
+        document.getElementById('ov-date').innerHTML = sign.getDate();
 
-    if(signs.Categories[sign.getCategory()].name.length > 37){
-        document.getElementById('ov-category').style.fontSize = '12px';
-    }else{
-        document.getElementById('ov-category').style.fontSize = '15px';
+        if(signs.Categories[sign.getCategory()].name.length > 37){
+            document.getElementById('ov-category').style.fontSize = '12px';
+        }else{
+            document.getElementById('ov-category').style.fontSize = '15px';
+        }
     }
 
 }
@@ -248,6 +250,7 @@ editMarker = () => {
 }
 
 resetOV = () => {
+    let search_overlay = document.getElementById('search-overlay');
     let confirmation_overlay = document.getElementById('confirmation-overlay');
     let moveMarkerHelp = document.getElementById('moveMarkerHelp');
     //get all elements
@@ -266,6 +269,11 @@ resetOV = () => {
     let ov_move_button = document.getElementById('ov-move-button');
     let ov_save = document.getElementById('ov-save');
     let ov_cancel = document.getElementById('ov-cancel');
+
+    if(confirmation_overlay.classList.contains('is-visible')) confirmation_overlay.classList.remove('is-visible');
+    if(search_overlay.classList.contains('is-visible')) search_overlay.classList.remove('is-visible');
+    App.states.isMoving = false;
+    App.states.movingCoords = null;
 
     //hide edit-fields
     //ov_name_edit.style.display = 'none';

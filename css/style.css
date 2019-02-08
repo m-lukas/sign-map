@@ -89,6 +89,12 @@ button:focus {
     width: 20px;
 }
 
+#search-results-count{
+    margin-top: 5px;
+    font-size: 14px;
+    float: right;
+}
+
 .overlay{
     position: absolute;
     z-index: 3;
