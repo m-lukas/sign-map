@@ -55,7 +55,32 @@ searchSigns = (event) => {
     }
 
     document.getElementById('search-results-count').innerHTML = `${signNumber}/${returnSigns.length} Ergebnisse`
+}
 
+deleteMarker = () => {
 
+    let confirmationPopup = new ConfirmationPopup(
+        {description: "Möchten Sie den Marker wirklich <b>löschen</b>?"}, 
+        'completeDeletion()', 
+        'closePopup()'
+    );
+    confirmationPopup.render();
+
+}
+
+completeDeletion = () => {
+
+    let sign = App.selectedSign;
+    unselectMarker();
+
+    let marker = signs.findMarkerById(sign.getID());
+    marker.setMap(null);
+    let mi = App.markerList.indexOf(marker);
+    App.markerList.splice(mi, 1)
+
+    let si = App.signList.indexOf(sign);
+    App.signList.splice(si, 1);
+
+    //remove from db
 
 }

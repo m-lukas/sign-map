@@ -104,6 +104,9 @@ button:focus {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .overlay.is-visible{
@@ -115,9 +118,6 @@ button:focus {
 .overlay-wrapper{
     height: 100%;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .confirmation-popup{
@@ -158,7 +158,7 @@ button:focus {
 
 .popup-ok{
     grid-area: ok;
-    background-color: rgba(126, 223, 7, 0.842);
+    background-color: rgb(255, 106, 73);
     border-radius: 0 0 0 5px;
 }
 

@@ -13,49 +13,33 @@
   <body>
     <div class="mapWrapper">
         <div id="search-overlay" class="overlay">
-            <div class="overlay-wrapper">
-                <div class="search-popup">
-                    <div class="search-popup-header">
-                        <button class="ov-button close-button search-close" onclick="closePopup()">
-                            <img src="images/icons/close.svg" alt="close">
+            <div class="search-popup">
+                <div class="search-popup-header">
+                    <button class="ov-button close-button search-close" onclick="closePopup()">
+                        <img src="images/icons/close.svg" alt="close">
+                    </button>
+                    <h1 class="search-title">Suchen</h1>
+                    <div class="searchbar-wrapper">
+                        <input type="text" name="searchbar" class="ov-value" id="searchbar" oninput="searchSigns(event)">
+                        <button class="searchbar-button" onclick="searchSigns()">
+                            <img src="images/icons/search.svg" alt="search">
                         </button>
-                        <h1 class="search-title">Suchen</h1>
-                        <div class="searchbar-wrapper">
-                            <input type="text" name="searchbar" class="ov-value" id="searchbar" oninput="searchSigns(event)">
-                            <button class="searchbar-button" onclick="searchSigns()">
-                                <img src="images/icons/search.svg" alt="search">
-                            </button>
-                        </div>
                     </div>
-                    <table id="search-table" class="dataTable">
-                        <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Titel</th>
-                              <th>Typ</th>
-                              <th>Änderungsdatum</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <p id="search-results-count">0 / 0 Ergebnissen</p>
                 </div>
+                <table id="search-table" class="dataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titel</th>
+                            <th>Typ</th>
+                            <th>Änderungsdatum</th>
+                        </tr>
+                    </thead>
+                </table>
+                <p id="search-results-count">0 / 0 Ergebnissen</p>
             </div>
         </div>
         <div id="confirmation-overlay" class="overlay">
-            <div class="overlay-wrapper">
-                <div class="confirmation-popup">
-                    <button class="ov-button close-button" onclick="closePopup()">
-                        <img src="images/icons/close.svg" alt="close">
-                    </button>
-                    <p class="popup-desc">Möchten Sie den Marker an die ausgewählte Position verschieben?</p>
-                    <div class="popup-ok popup-action" onclick="completeMoving()">
-                        <p>Ja</p>
-                    </div>
-                    <div class="popup-cancel popup-action" onclick="cancelMoving()">
-                        <p>Nein</p>
-                    </div>
-                </div>
-            </div>
         </div>
         <div id="moveMarkerHelp" class="instruction-box">
             <div class="instruction-wrapper">
@@ -147,6 +131,7 @@
         require('./utils.js');
         const App = require('./App.js');
         const signs = require('./signs.js');
+        const ConfirmationPopup = require('./components/ConfirmationPopup.js');
 
         function initMap() {
 
@@ -160,7 +145,7 @@
               center: {lat: 51.141929, lng: 14.980407},
               draggableCursor: 'crosshair',
               streetViewControl: false,
-              //fullscreenControl: false,
+              fullscreenControl: false,
               mapTypeControl: false
             });
 
@@ -193,8 +178,13 @@
                 if(App.states.isMoving){
                     
                     App.states.movingCoords = event.latLng;
-                    document.getElementById('confirmation-overlay').classList.add('is-visible');
-
+                    let confirmationPopup = new ConfirmationPopup(
+                                                {description: "Möchten Sie den Marker an die ausgewählte Position verschieben?"}, 
+                                                'completeMoving()', 
+                                                'closePopup()'
+                                            );
+                    confirmationPopup.render();
+                    
                 }else{
                     unselectMarker();
                 }
