@@ -82,5 +82,49 @@ completeDeletion = () => {
     App.signList.splice(si, 1);
 
     //remove from db
+}
 
+createMarker = (latLng) => {
+
+    App.states.isCreating = true;
+    App.states.createCoords = latLng;
+    document.getElementById('create-overlay').classList.add('is-visible');
+
+}
+
+completeCreation = (e) => {
+
+    e.preventDefault();
+    if(App.states.isCreating && App.states.createCoords){
+
+        let title = e.target.title.value;
+        let category = e.target.category.value;
+        let bent = e.target.bent.value;
+        let dirPath = e.target.dirPath.value;
+
+        let id = String(signs.getNewId());
+        let date = getFormattedDate();
+        let coordinats = App.states.createCoords;
+
+        let sign = new signs.Sign(id, title, bent, category, dirPath, date, coordinats);
+        App.signList.push(sign);
+
+        //Save Marker to Database
+
+        signs.placeMarker(sign); //not necessary if in database
+
+        selectMarker(sign);
+        closePopup();
+
+    }else{
+        closePopup();
+    }
+
+    e.target.reset();
+
+}
+
+getFormattedDate = () => {
+    let date = new Date();
+    return `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
 }

@@ -41,6 +41,41 @@
         </div>
         <div id="confirmation-overlay" class="overlay">
         </div>
+        <div id="create-overlay" class="overlay">
+          <div class="create-popup popup">
+            <div class="create-popup-header">
+                <button class="ov-button close-button" onclick="closePopup()">
+                    <img src="images/icons/close.svg" alt="close">
+                </button>
+                <h1>Neues Schild erstellen:</h1>
+            </div>
+            <form onsubmit="completeCreation(event)" class="create-popup-body">
+                <p class="ov-label">TITEL *</p>
+                <div class="ov-wrapper">
+                  <input type="text" class="ov-value" name="title" id="create-titel-edit" required>
+                </div>
+
+                <p class="ov-label">KATEGORIE *</p>
+                <div class="ov-wrapper">
+                  <select class="ov-value" name="category" id="create-category-edit" required>
+                  </select>
+                </div>
+    
+                <p class="ov-label">GEBOGEN? *</p>
+                <div class="ov-wrapper">
+                  <select class="ov-value" name="bent" id="create-bent-edit" required>
+                  </select>
+                </div>
+    
+                <p id="ov-dirPath-label" class="ov-label">SPEICHERORT</p>
+                <div class="ov-wrapper">
+                  <input class="ov-value ov-dirPath" name="dirPath" id="create-dirPath-edit" onclick="onEdit(event)" readonly></input>
+                </div>
+                <p class="create-error">Bitte fülle alle Felder aus! (*)</p>
+                <input class="create-save ov-button" type="submit" value="Speichern">
+              </form>
+          </div>
+        </div>
         <div id="moveMarkerHelp" class="instruction-box">
             <div class="instruction-wrapper">
                 <img src="images/icons/move_black.svg" alt="move">
@@ -88,7 +123,7 @@
                   <p id="ov-dirPath-label" class="ov-label">SPEICHERORT</p>
                   <div class="ov-wrapper">
                     <p id="ov-dirPath" class="ov-value">...</p>
-                    <p class="ov-value ov-edit" id="ov-dirPath-edit" onclick="onEdit(event)"></p>
+                    <input class="ov-value ov-edit ov-dirPath" id="ov-dirPath-edit" onclick="onEdit(event)" readonly></input>
                   </div>
               
                   <div class="ov-margin">
@@ -174,7 +209,6 @@
             });
 
             google.maps.event.addListener(App.map, 'click', function(event) {
-                console.log(App.states.isMoving);
                 if(App.states.isMoving){
                     
                     App.states.movingCoords = event.latLng;
@@ -185,6 +219,8 @@
                                             );
                     confirmationPopup.render();
                     
+                }else if(!App.states.isCreating){
+                    createMarker(event.latLng);
                 }else{
                     unselectMarker();
                 }

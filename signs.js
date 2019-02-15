@@ -132,6 +132,19 @@ const signs = {
         return sign;
     },
 
+    getNewId: () => {
+
+        //TODO: USE DATABASE OR LISTENER
+
+        let highestSignID = 1;
+        App.signList.forEach(querySign => {
+            if(parseInt(querySign.getID()) > parseInt(highestSignID)){
+                highestSignID = parseInt(querySign.getID());
+            }
+        });
+        return highestSignID+1;
+    },
+
     setMarkerVisibility: (signId, value) => {
         let marker = signs.findMarkerById(signId);
         if(typeof value === "boolean" && marker !== null) marker.setVisible(value);
@@ -159,7 +172,7 @@ const signs = {
                 let name = data.val().name;
                 let bent = data.val().bentId;
                 let type = data.val().typ;
-                let dirPath = data.val().save;
+                let dirPath = data.val().save || '';
                 let changeDate = data.val().date;
                 let coordinats = {lat: data.val().lat, lng: data.val().lng};
                 let category;

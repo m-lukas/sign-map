@@ -35,6 +35,7 @@ renderCategories= () => {
             //<option value="...">...</option>
             let categoryOption = `<option value="${category[0]}">${category[1].name}</option>`
             jQuery(categoryOption).appendTo('#ov-category-edit');
+            jQuery(categoryOption).appendTo('#create-category-edit');
 
         });     
     });
@@ -58,6 +59,7 @@ renderBentTypes = () => {
             //<option value="...">...</option>
             let bentOption = `<option value="${bentType[0]}">${bentType[1].name}</option>`
             jQuery(bentOption).appendTo('#ov-bent-edit');
+            jQuery(bentOption).appendTo('#create-bent-edit');
 
         });     
     });
@@ -131,7 +133,7 @@ selectMarker = (sign) => {
         App.states.categoryValue = signs.Categories[sign.getCategory()].name;
         App.states.bentId = sign.getBent();
         App.states.bentValue = signs.BentTypes[sign.getBent()].name;
-        App.states.dirPathValue = sign.getPath();
+        App.states.dirPathValue = sign.getPath() || '';
 
         setOv(sign);
 
@@ -167,14 +169,15 @@ unselectMarker = () => {
 }
 
 setOv = (sign) => {
-
+    console.log("Test")
+    console.log(sign)
     if(sign != null){
         document.getElementById('ov-id').innerHTML = sign.getID();
         document.getElementById('ov-name').innerHTML = sign.getName();
         document.getElementById('ov-categoryId').innerHTML = sign.getCategory();
         document.getElementById('ov-category').innerHTML = signs.Categories[sign.getCategory()].name;
         document.getElementById('ov-bent').innerHTML = signs.BentTypes[sign.getBent()].name;;
-        document.getElementById('ov-dirPath').innerHTML = sign.getPath();
+        document.getElementById('ov-dirPath').value = sign.getPath();
         document.getElementById('ov-date').innerHTML = sign.getDate();
 
         if(signs.Categories[sign.getCategory()].name.length > 37){
@@ -232,7 +235,8 @@ editMarker = () => {
     //document.getElementById('ov-name-edit').value = App.states.nameValue;
     document.getElementById('ov-category-edit').value = App.states.categoryId;
     document.getElementById('ov-bent-edit').value = App.states.bentId;
-    document.getElementById('ov-dirPath-edit').innerHTML = App.states.dirPathValue;
+    console.log(App.states.dirPathValue);
+    document.getElementById('ov-dirPath-edit').value = App.states.dirPathValue;
 
     if(App.states.categoryValue.length > 37){
         document.getElementById('ov-category-edit').style.fontSize = '12px';
@@ -252,6 +256,7 @@ editMarker = () => {
 resetOV = () => {
     let search_overlay = document.getElementById('search-overlay');
     let confirmation_overlay = document.getElementById('confirmation-overlay');
+    let create_overlay = document.getElementById('create-overlay');
     let moveMarkerHelp = document.getElementById('moveMarkerHelp');
     //get all elements
     let ov_id = document.getElementById('ov-id');
@@ -272,8 +277,11 @@ resetOV = () => {
 
     if(confirmation_overlay.classList.contains('is-visible')) confirmation_overlay.classList.remove('is-visible');
     if(search_overlay.classList.contains('is-visible')) search_overlay.classList.remove('is-visible');
+    if(create_overlay.classList.contains('is-visible')) create_overlay.classList.remove('is-visible');
     App.states.isMoving = false;
     App.states.movingCoords = null;
+    App.states.isCreating = false;
+    App.states.createCoords = null;
 
     //hide edit-fields
     //ov_name_edit.style.display = 'none';
@@ -297,7 +305,7 @@ resetOV = () => {
     //ov_name_edit.value = "";
     ov_category_edit.value = "";
     ov_bent_edit.value = "";
-    ov_dirPath_edit.innerHTML = "";
+    ov_dirPath_edit.value = "";
 
     //reset font-sizes
     ov_category.style.fontSize = '15px';
@@ -314,10 +322,11 @@ resetOV = () => {
 
 onEdit = (event) => {
     let element = event.target.id;
-    if(event.target.id !== "ov-dirPath-edit") var value = event.target.value;
+    var value = event.target.value;
 
     //validation? -> not necessary if only selects
 
+    let path;
     switch(element){
         case 'ov-name-edit':
             App.states.nameValue = value;
@@ -329,11 +338,17 @@ onEdit = (event) => {
             App.states.bentId = value;
             break;
         case 'ov-dirPath-edit':
-            let path = dialog.showOpenDialog({
+            path = dialog.showOpenDialog({
                 properties: ["openFile"]
-            })
-            document.getElementById("ov-dirPath-edit").innerHTML = path;
+            });
+            path ? document.getElementById("ov-dirPath-edit").value = path : document.getElementById("ov-dirPath-edit").value = '';
             App.states.dirPathValue = path;
+            break;
+        case 'create-dirPath-edit':
+            path = dialog.showOpenDialog({
+                properties: ["openFile"]
+            });
+            path ? document.getElementById("create-dirPath-edit").value = path : document.getElementById("create-dirPath-edit").value = '';
             break;
     }
 }
@@ -361,9 +376,7 @@ saveEdits = () => {
         App.selectedSign.setBent(bent);
         App.selectedSign.setPath(dirPath);
 
-        let date = new Date();
-        let formatedDate = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
-
+        let formatedDate = getFormattedDate();
         App.selectedSign.setDate(formatedDate);
 
         setOv(App.selectedSign);

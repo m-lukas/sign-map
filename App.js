@@ -23,6 +23,8 @@ const App = {
         ov_errors: [],
         isMoving: false,
         movingCoords: null,
+        createCoords: null,
+        isCreating: null,
     },
 
     filterIsActive: (identifier) => {
