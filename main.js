@@ -1,27 +1,31 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+const isOnline = require('is-online');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let window;
 
-function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1920, height: 1080})
+async function createWindow () {
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  const onlineStatus = await isOnline();
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  window = new BrowserWindow({width: 1920, height: 1080});
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
+  if(onlineStatus === true){
+    window.loadFile('index.html');
+  }else{
+    window.loadFile('error.html');
+  }
+
+  window.webContents.openDevTools();
+
+  window.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
-  })
+    window = null
+  });
 }
 
 // This method will be called when Electron has finished

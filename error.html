@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/main.css" type="text/css" rel="stylesheet">
+        <link href="css/error.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="popup-wrapper">
+            <div class="popup">
+                <h1>Keine Internet Verbindung!</h1>
+                <button id="reload" class="reload ov-button">
+                    <img src="images/icons/reload.svg" alt="reload">
+                </button>
+                <div class="conn-wrapper">
+                    <div class="dot one"></div>
+                    <div class="dot two"></div>
+                    <div class="dot three"></div>
+                </div>
+                <p>Bitte überprüfe deine Netzwerk Verbindung und klicke anschließend auf den <b>blauen</b> Knopf.</p>
+            </div>
+        </div>
+        <script>
+
+            require('jQuery');
+            const { remote } = require('electron')
+            const isOnline = require('is-online');
+
+            jQuery(document).ready( function () {
+                jQuery('#reload').on('click', reload);
+            });
+
+            const reload = async () => {
+                const onlineStatus = await isOnline();
+                if(onlineStatus){
+                    remote.getCurrentWindow().loadFile('index.html');
+                }
+    
+            }
+        
+        </script>
+    </body>
+</html>

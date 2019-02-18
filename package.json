@@ -25,6 +25,7 @@
     "dotenv": "^6.2.0",
     "electromon": "^1.0.10",
     "fs": "0.0.1-security",
+    "is-online": "^8.0.0",
     "jQuery": "^1.7.4"
   }
 }

@@ -167,8 +167,13 @@ const signs = {
     loadSigns: () => {
         //id, name, bent, type, dirPath, changeDate, coordinats, color
         let signRef = App.database.ref("signs");
-        signRef.orderByValue().once("value", function(snapshot) {
+        signRef.orderByValue().on("value", function(snapshot) {
             snapshot.forEach(function(data) {
+                let id = data.key;
+                let refSign = signs.findSignById(id);
+                if(refSign){
+                    signs.clearSign(refSign);
+                }
                 let name = data.val().name;
                 let bent = data.val().bentId;
                 let type = data.val().typ;
@@ -176,6 +181,7 @@ const signs = {
                 let changeDate = data.val().date;
                 let coordinats = {lat: data.val().lat, lng: data.val().lng};
                 let category;
+
                 switch(type){
                     case 'B1 - Service- und Informationsschild (A3 quer)':
                         category="1";
@@ -233,15 +239,6 @@ const signs = {
                         break;        
                 }
                 
-                let id = data.key;
-                /*
-                if(App.ids.includes(id)){
-                    id = Math.max.apply(null, App.ids)+1;
-                }
-                */
-                //or update id in database
-                App.ids.push(id);
-                
                 let sign = new signs.Sign(id, name, bent, category, dirPath, changeDate, coordinats);
     
                 signs.placeMarker(sign);
@@ -280,6 +277,19 @@ const signs = {
                     sign.getDate()
 				] ).draw( false );
 		} );
+    },
+
+    clearSign: (sign) => {
+        if(App.selectedSign === sign){
+            unselectMarker(sign);
+        }
+        let marker = signs.findMarkerById(sign.getID());
+        marker.setMap(null);
+        let mi = App.markerList.indexOf(marker);
+        App.markerList.splice(mi, 1)
+
+        let si = App.signList.indexOf(sign);
+        App.signList.splice(si, 1);
     }
 
 }
